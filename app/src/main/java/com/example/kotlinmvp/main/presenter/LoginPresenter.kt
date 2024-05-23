@@ -1,6 +1,5 @@
 package com.example.kotlinmvp.main.presenter
 
-import com.example.baselib.bean.UserInfoBean
 import com.example.baselib.bean.WXArticleBean
 import com.example.baselib.https.ApiResponse
 import com.example.kotlinmvp.main.contract.LoginContract
@@ -58,7 +57,7 @@ class LoginPresenter : LoginContract.Presenter() {
 
         })
 
-        //提醒，如果第二个接口请求参数需要从第一个接口返回的数据里去，可以是 concatMap 进行组合请求
+        //提醒，如果第二个接口请求参数需要从第一个接口返回的数据里取，可以使用 concatMap 进行组合请求
 //        wrapObservable(mModel.getTempAccessToken().concatMap { autnBen ->
 //            return@concatMap mModel.login(autnBen.accessToken)
 //        }).subscribe(object : Observer<ApiResponse<UserInfoBean?>>{
