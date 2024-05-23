@@ -106,11 +106,11 @@ open class BasePresenter<M : BaseModel, V : BaseView> {
     }
 
 
-    //
     protected var listDisposable: MutableList<Disposable> = mutableListOf()
     protected open fun addDisposable(disposable: Disposable) {
         listDisposable.add(disposable)
     }
+    //演示使用rxjava3
     protected open fun <T> wrapObservable(observable: Observable<ApiResponse<T?>>): Observable<ApiResponse<T?>> {
         return observable
             .subscribeOn(Schedulers.io())
