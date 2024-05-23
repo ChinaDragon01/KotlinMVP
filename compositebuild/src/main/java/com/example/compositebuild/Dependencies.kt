@@ -75,6 +75,7 @@ object Libs {
     const val room_compiler = "androidx.room:room-compiler:${Versions.room_version}"
 
     const val retrofit = "com.squareup.retrofit2:retrofit:${Versions.retrofit}"
+    const val adapter_rxjava3 = "com.squareup.retrofit2:adapter-rxjava3:${Versions.retrofit}"
     const val converterGson = "com.squareup.retrofit2:converter-gson:${Versions.retrofit}"
     const val logging_interceptor = "com.squareup.okhttp3:logging-interceptor:4.12.0"// https://github.com/square/okhttp/tree/master/okhttp-logging-interceptor
     const val glide = "com.github.bumptech.glide:glide:${Versions.glideVersion}"// https://github.com/bumptech/glide

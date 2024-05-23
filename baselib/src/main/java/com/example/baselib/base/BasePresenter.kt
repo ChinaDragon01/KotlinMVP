@@ -3,6 +3,10 @@ package com.example.baselib.base
 import com.example.baselib.constant.HttpsConstant
 import com.example.baselib.https.ApiResponse
 import com.example.baselib.utils.ToastUtil
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.disposables.Disposable
+import io.reactivex.rxjava3.schedulers.Schedulers
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -51,6 +55,14 @@ open class BasePresenter<M : BaseModel, V : BaseView> {
         if (::mViewRef.isInitialized) {
             mViewRef.clear()
         }
+
+        if (listDisposable.isEmpty()){
+            return
+        }
+        listDisposable.forEach{
+            it.dispose()
+        }
+        listDisposable.clear()
     }
 
     fun <T> launchApiCall(
@@ -91,5 +103,18 @@ open class BasePresenter<M : BaseModel, V : BaseView> {
         if (job.isActive) {
             jobList.add(job)
         }
+    }
+
+
+    //
+    protected var listDisposable: MutableList<Disposable> = mutableListOf()
+    protected open fun addDisposable(disposable: Disposable) {
+        listDisposable.add(disposable)
+    }
+    protected open fun <T> wrapObservable(observable: Observable<ApiResponse<T?>>): Observable<ApiResponse<T?>> {
+        return observable
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .unsubscribeOn(Schedulers.io())
     }
 }

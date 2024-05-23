@@ -11,12 +11,13 @@ import kotlinx.coroutines.withContext
  *Time: 2024/5/6
  */
 open class BaseModel{
-    val apiService by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) {
-        RetrofitManager.getService(
-            ApiService::class.java
-        )
+    companion object{
+        val apiService by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) {
+            RetrofitManager.getService(
+                ApiService::class.java
+            )
+        }
     }
-
     suspend fun <T> apiCall(api: suspend () -> ApiResponse<T>): ApiResponse<T> {
         return withContext(Dispatchers.IO) { api.invoke() }
     }
