@@ -22,6 +22,7 @@ abstract class BaseActivity<P : BasePresenter<*, *>, M : BaseModel, VB : ViewBin
         initPresenter()
         initData()
         initView(savedInstanceState)
+        loadData()
         initEvent()
     }
 
