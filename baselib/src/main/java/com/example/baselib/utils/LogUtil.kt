@@ -9,10 +9,15 @@ import com.example.baselib.constant.GlobalConstant.PRINGT_LOG
  */
 object LogUtil {
     fun i(text: String?) {
-        i(text)
+        if (text.isNullOrEmpty()) {
+            return
+        }
+        if (PRINGT_LOG) {
+            Log.i("==", text)
+        }
     }
 
-    fun i(tag: String = "==", text: String?) {
+    fun i(tag: String, text: String?) {
         if (text.isNullOrEmpty()) {
             return
         }
