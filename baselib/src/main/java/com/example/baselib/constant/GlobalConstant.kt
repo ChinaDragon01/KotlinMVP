@@ -5,7 +5,7 @@ package com.example.baselib.constant
  *Time: 2024/2/18 09:49
  */
 object GlobalConstant {
-    const val APP_NAME = "KotlinMVC"
+    const val APP_NAME = "KotlinMVP"
     const val DEFAULT_EMPTY = ""
     const val DEFAULT_TRUE = true
     const val DEFAULT_FALSE = false

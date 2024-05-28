@@ -11,6 +11,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.lang.ref.WeakReference
 
 /**
@@ -56,10 +57,10 @@ open class BasePresenter<M : BaseModel, V : BaseView> {
             mViewRef.clear()
         }
 
-        if (listDisposable.isEmpty()){
+        if (listDisposable.isEmpty()) {
             return
         }
-        listDisposable.forEach{
+        listDisposable.forEach {
             it.dispose()
         }
         listDisposable.clear()
@@ -73,30 +74,36 @@ open class BasePresenter<M : BaseModel, V : BaseView> {
         showToast: Boolean = true,
     ) {
         /*
-           注意：BaseModel 里的 apiCall 里面 使用了withContext(Dispatchers.IO)
+           注意：
+           BaseModel 里的 apiCall 里面 使用了withContext(Dispatchers.IO)
            所以CoroutineScope的 context 可以指定为Dispatchers.Unconfined
 
            如果 BaseModel 里的 apiCall 里面 没有使用withContext(Dispatchers.IO)
            那么CoroutineScope的 context 需要指定为Dispatchers.IO
 
-           建议指定为 Dispatchers.IO
+           这里指定为 Dispatchers.IO
 
            如果不明白，可以查阅关于调度器（Dispatchers）的使用
          */
         val job = CoroutineScope(Dispatchers.IO).launch {
             try {
                 val response = apiCall()
-                if (response.errorCode == HttpsConstant.NET_SUCCESS) {
-                    successCallBack(response)
+                withContext(Dispatchers.Main) {
+                    if (response.errorCode == HttpsConstant.NET_SUCCESS) {
+                        successCallBack(response)
 
-                } else {
-                    errorCallBack(response)
-                    if (showToast) {
-                        ToastUtil.show(response.errorMsg)
+                    } else {
+                        errorCallBack(response)
+                        if (showToast) {
+                            ToastUtil.show(response.errorMsg)
+                        }
                     }
                 }
+
             } catch (e: Exception) {
-                exceptionCallBack()
+                withContext(Dispatchers.Main) {
+                    exceptionCallBack()
+                }
 
             }
         }
@@ -105,11 +112,11 @@ open class BasePresenter<M : BaseModel, V : BaseView> {
         }
     }
 
-
     protected var listDisposable: MutableList<Disposable> = mutableListOf()
     protected open fun addDisposable(disposable: Disposable) {
         listDisposable.add(disposable)
     }
+
     //演示使用rxjava3
     protected open fun <T> wrapObservable(observable: Observable<ApiResponse<T?>>): Observable<ApiResponse<T?>> {
         return observable

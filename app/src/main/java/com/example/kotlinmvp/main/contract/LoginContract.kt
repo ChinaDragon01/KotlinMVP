@@ -15,11 +15,9 @@ interface LoginContract {
     interface LoginView : BaseView {
         fun loginSuccess(userInfoBean: UserInfoBean)
         fun loginFail(apiErrorInfo: ApiErrorInfo)
-        fun wxArticelSuccess(wxArticleBeanList: List<WXArticleBean>)
     }
 
     abstract class Presenter : BasePresenter<LoginModel, LoginView>() {
         abstract fun login(userName: String, pwd: String)
-        abstract fun getWXArticel()
     }
 }

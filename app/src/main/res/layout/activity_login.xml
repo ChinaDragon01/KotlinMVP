@@ -22,7 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ellipsize="end"
-            android:hint="请输入1~20个字符的用户名"
+            android:hint="@string/input_account_hint"
             android:imeOptions="actionNext"
             android:maxLength="20"
             android:paddingStart="@dimen/dp10"
@@ -41,7 +41,7 @@
             android:id="@+id/etPwd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="请输入8~16位的密码"
+            android:hint="@string/input_pwd_hint"
             android:imeOptions="actionNext"
             android:inputType="textPassword"
             android:maxLength="16"
@@ -59,7 +59,19 @@
         android:layout_marginTop="@dimen/dp50"
         android:backgroundTint="@color/black"
         android:gravity="center"
-        android:text="登录"
+        android:text="@string/login"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp16"
+        app:cornerRadius="@dimen/dp8" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnLookWXArticle"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp50"
+        android:layout_marginTop="@dimen/dp50"
+        android:backgroundTint="@color/black"
+        android:gravity="center"
+        android:text="@string/lookWXArticle"
         android:textColor="@color/white"
         android:textSize="@dimen/sp16"
         app:cornerRadius="@dimen/dp8" />

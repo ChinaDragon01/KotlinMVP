@@ -19,6 +19,7 @@ open class BaseModel{
         }
     }
     suspend fun <T> apiCall(api: suspend () -> ApiResponse<T>): ApiResponse<T> {
-        return withContext(Dispatchers.IO) { api.invoke() }
+//        return withContext(Dispatchers.IO) { api.invoke() }
+        return api.invoke()
     }
 }
